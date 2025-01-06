@@ -8,7 +8,7 @@ public class GitHub{
         TextInputFile themesFile = new TextInputFile(themesFileName);
 
         // Read themes from file
-        String[] themes = new String[10]; // Max 10 themes for simplicity
+        String[] themes = new String[10]; 
         int themeCount = 0;
         while (themesFile.eof() == false){
             themes[themeCount] = themesFile.readLine();
@@ -59,7 +59,7 @@ public class GitHub{
 			TextInputFile themeFile = new TextInputFile(themeFileName);
 
 			// Read words from the theme file
-			String[] words = new String[100]; // Max 100 words for simplicity
+			String[] words = new String[100]; 
 			int wordCount = 0;
 			while (themeFile.eof() == false) {
 				words[wordCount] = themeFile.readLine().toUpperCase();
