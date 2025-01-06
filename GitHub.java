@@ -1,6 +1,6 @@
 import arc.*;
 
-public class githubtest {
+public class GitHub {
     public static void main(String[] args) {
         Console con = new Console();
         
