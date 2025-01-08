@@ -66,6 +66,10 @@ public class GitHub{
 				wordCount++;
 			}
 			themeFile.close();
+			
+			// Select a random word
+			String secretWord = words[(int) (Math.random() * wordCount)];
+
     }
         
 }
