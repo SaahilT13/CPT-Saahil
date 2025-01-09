@@ -5,8 +5,8 @@ Loki
 Thanos
 Spiderman
 Hulk
-Captain Marvel
-Captain America
+CaptainMarvel
+CaptainAmerica
 Nick Fury
 Wolverine
 Galactus
