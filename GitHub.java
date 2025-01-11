@@ -7,9 +7,10 @@ public class GitHub {
         String themesFileName = "themes.txt";
         String[] themes = new String[100]; // Increased size to avoid indexing issues
         int themeCount = loadThemes(themesFileName, themes);
-
+		
+		boolean running = true;
         // Main menu
-        while (true) {
+        while (running){
 			con.clear();
             con.println("Welcome to Hangman!");
             con.println("1. Play Game");
@@ -20,18 +21,18 @@ public class GitHub {
             con.print("Enter your choice: ");
             int choice = con.readInt();
 
-            if (choice == 1) {
+            if (choice == 1){
                 Game(con, themes, themeCount);
-            } else if (choice == 2) {
+            } else if (choice == 2){
                 viewHighScores(con);
-            } else if (choice == 3) {
+            } else if (choice == 3){
                 addTheme(con);
                 themeCount = loadThemes(themesFileName, themes); // Reload themes after adding one
-            } else if (choice == 4) {
+            } else if (choice == 4){
                 displayHelp(con);
-            } else if (choice == 5) {
+            } else if (choice == 5){
                 con.println("Thanks for playing!");
-                break;
+                running = false;
             } else {
                 con.println("Invalid choice. Try again.");
             }
@@ -116,7 +117,7 @@ public class GitHub {
             if (guess.equals(secretWord)) {
                 con.println("Congratulations! You guessed the word: " + secretWord);
                  saveHighScore(playerName, attemptsLeft);
-                 win(con, playerName);
+                 win(con);
                  return;
             } else {
                 attemptsLeft = attemptsLeft - 1;
@@ -192,20 +193,18 @@ public class GitHub {
 			index = (int) (Math.random() * secretWord.length());
 		}
 
-		revealedWord[index] = secretWord.charAt(index);
+		
 	}
 
 	//Win Screen
-	public static void win(Console con, String playerName) {
+	public static void win(Console con) {
 		con.println("Congratulations You Won!!");
-		con.println("\nPress any key to return to the main menu...");
-		con.readLine(); // Wait for user input before returning
+		
 	}
      
     public static void drawHangman(Console con, int stage) {
         con.clear();
        
-    }
 
-    
+	}
 }
