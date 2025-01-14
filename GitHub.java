@@ -2,10 +2,10 @@ import arc.*;
 
 public class GitHub {
     public static void main(String[] args) {
-        Console con = new Console();
+        Console con = new Console("Hangman", 1280, 720);
         
         String themesFileName = "themes.txt";
-        String[] themes = new String[100]; // Increased size to avoid indexing issues
+        String[] themes = new String[100]; 
         int themeCount = loadThemes(themesFileName, themes);
 		
 		boolean running = true;
@@ -21,18 +21,22 @@ public class GitHub {
             con.print("Enter your choice: ");
             int choice = con.readInt();
 
+			//Get user input to know what theeir choice is
+			
             if (choice == 1){
                 Game(con, themes, themeCount);
-            } else if (choice == 2){
+            } else if(choice == 2){
                 viewHighScores(con);
-            } else if (choice == 3){
+            } else if(choice == 3){
                 addTheme(con);
                 themeCount = loadThemes(themesFileName, themes); // Reload themes after adding one
-            } else if (choice == 4){
+            } else if(choice == 4){
                 displayHelp(con);
-            } else if (choice == 5){
+            } else if(choice == 5){
                 con.println("Thanks for playing!");
                 running = false;
+            }else if(choice == 26){ //Year We Graduate
+				funnyscreen(con);
             } else {
                 con.println("Invalid choice. Try again.");
             }
@@ -193,18 +197,52 @@ public class GitHub {
 			index = (int) (Math.random() * secretWord.length());
 		}
 
+		revealedWord[index] = secretWord.charAt(index);
+	}
+	
+	public static void funnyscreen(Console con){
+		con.clear();
+		con.println("--------------------------------------");
+		con.println("|        SECRET MENU UNLOCKED!       |");
+		con.println("--------------------------------------");
+		con.println("| Why don't programmers like nature? |");
+		con.println("|                                    |");
+		con.println("| Because it has too many bugs!      |");
+		con.println("--------------------------------------");
 		
+		con.println("Since you were able to find this page.");
+		con.println("Type this same number when you are guessing a word");
+		con.println("Press any key to return to the main menu...");
+		con.readLine();
 	}
 
 	//Win Screen
-	public static void win(Console con) {
+	public static void win(Console con){
 		con.println("Congratulations You Won!!");
-		
+		con.println("\nPress any key to return to the main menu...");
+		con.readLine(); // Wait for user input before returning
 	}
      
-    public static void drawHangman(Console con, int stage) {
+    //drawing the hanging man using 2d array
+    public static void drawHangman(Console con, int stage){
         con.clear();
-       
+        String[][] hangmanStages = {
+			{ "  -----", "  |   |", "      |", "      |", "      |", "      |" },
+			{ "  -----", "  |   |", "  O   |", "      |", "      |", "      |" },
+			{ "  -----", "  |   |", "  O   |", "  |   |", "      |", "      |" },
+			{ "  -----", "  |   |", "  O   |", " /|   |", "      |", "      |" },
+			{ "  -----", "  |   |", "  O   |", " /|\\  |", "      |", "      |" },
+			{ "  -----", "  |   |", "  O   |", " /|\\  |", " /    |", "      |" },
+			{ "  -----", "  |   |", "  O   |", " /|\\  |", " / \\  |" }
+		};
 
+		// Print the selected stage
+		for (int i = 0; i < hangmanStages[stage].length; i++) {
+			con.println(hangmanStages[stage][i]);
+		}
 	}
+
 }
+
+    
+

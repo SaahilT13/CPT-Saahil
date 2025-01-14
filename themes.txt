@@ -1,6 +1,6 @@
 StarWars
 Marvel
-BrawStars
+BrawlStars
 School
 House
 hello
