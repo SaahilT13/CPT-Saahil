@@ -12,14 +12,18 @@ public class GitHub {
         // Main menu
         while (running){
 			con.clear();
-            con.println("Welcome to Hangman!");
-            con.println("1. Play Game");
-            con.println("2. View High Scores");
-            con.println("3. Add Theme");
-            con.println("4. Help");
-            con.println("5. Quit");
-            con.print("Enter your choice: ");
-            int choice = con.readInt();
+			con.println("--------------------------------------");
+			con.println("|          WELCOME TO HANGMAN!       |");
+			con.println("--------------------------------------");
+			con.println("| 1. Play Game                       |");
+			con.println("| 2. View High Scores                |");
+			con.println("| 3. Add Theme                       |");
+			con.println("| 4. Help                            |");
+			con.println("| 5. Quit                            |");
+			con.println("--------------------------------------");
+			con.print("Enter your choice: ");
+			int choice = con.readInt();
+
 
 			//Get user input to know what theeir choice is
 			
@@ -118,12 +122,14 @@ public class GitHub {
             con.print("Guess the word: ");
             String guess = con.readLine().toUpperCase();
 
-            if (guess.equals(secretWord)) {
-                con.println("Congratulations! You guessed the word: " + secretWord);
-                 saveHighScore(playerName, attemptsLeft);
-                 win(con);
-                 return;
-            } else {
+            if(guess.equals(secretWord)){
+                con.println("Thew word was: " + secretWord);
+                win(con, secretWord, attemptsLeft);
+                saveHighScore(playerName, attemptsLeft);
+                return;
+            }else if(guess.equals("26")){
+				attemptsLeft = attemptsLeft + 1;
+            }else{
                 attemptsLeft = attemptsLeft - 1;
                 revealRandomLetter(secretWord, revealedWord);
                 drawHangman(con, 6 - attemptsLeft);
@@ -133,12 +139,56 @@ public class GitHub {
         con.println("Game over! The word was: " + secretWord);
     }
 
+     
+
+      
       // Method to save high score
-    public static void saveHighScore(String playerName, int attemptsLeft) {
-        TextOutputFile scoreFile = new TextOutputFile("highscores.txt", true);
-        scoreFile.println(playerName + " - " + attemptsLeft);
-        scoreFile.close();
-    }
+	 public static void saveHighScore(String playerName, int attemptsLeft) {
+		// Read existing scores
+		TextInputFile scoreFile = new TextInputFile("highscores.txt");
+		String[] names = new String[100]; // Max 100 scores
+		int[] scores = new int[100];
+		int count = 0;
+
+		while (!scoreFile.eof() && count < 100) {
+			names[count] = scoreFile.readLine();
+			scores[count] = scoreFile.readInt();
+			count++;
+		}
+		scoreFile.close();
+
+		// Add new score
+		if (count < 100) {
+			names[count] = playerName;
+			scores[count] = attemptsLeft;
+			count++;
+		}
+
+		// Bubble Sort the scores in ascending order
+		for (int i = 0; i < count - 1; i++) {
+			for (int j = 0; j < count - i - 1; j++) {
+				if (scores[j] < scores[j + 1]) {
+					// Swap scores
+					int tempScore = scores[j];
+					scores[j] = scores[j + 1];
+					scores[j + 1] = tempScore;
+
+					// Swap names
+					String tempName = names[j];
+					names[j] = names[j + 1];
+					names[j + 1] = tempName;
+				}
+			}
+		}
+
+		// Overwrite the file with the updated scores (not append)
+		TextOutputFile outFile = new TextOutputFile("highscores.txt");
+		for (int i = 0; i < count; i++) {
+			outFile.println(names[i]);
+			outFile.println(scores[i]);
+		}
+		outFile.close();
+	}
 
 
     // Method to view high scores
@@ -211,16 +261,22 @@ public class GitHub {
 		con.println("--------------------------------------");
 		
 		con.println("Since you were able to find this page.");
-		con.println("Type this same number when you are guessing a word");
-		con.println("Press any key to return to the main menu...");
+		con.println("Type statitan when you are guessing and you will get a surprise");
+		con.println("\nPress any key to return to the main menu...");
 		con.readLine();
 	}
 
 	//Win Screen
-	public static void win(Console con){
-		con.println("Congratulations You Won!!");
+	public static void win(Console con, String secretWord, int attemptsLeft){
+		con.clear();
+		con.println("--------------------------------------");
+		con.println("|       CONGRATULATIONS! YOU WON!    |");
+		con.println("--------------------------------------");
+		con.println("| The correct word was: " + secretWord);
+		con.println("| Attempts remaining: " + attemptsLeft);
+		con.println("--------------------------------------");
 		con.println("\nPress any key to return to the main menu...");
-		con.readLine(); // Wait for user input before returning
+		con.getChar(); // Wait for user input before returning
 	}
      
     //drawing the hanging man using 2d array
