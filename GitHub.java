@@ -124,7 +124,7 @@ public class GitHub {
 
             if(guess.equals(secretWord)){
                 con.println("Thew word was: " + secretWord);
-                win(con, secretWord, attemptsLeft);
+                winScreen(con, secretWord, attemptsLeft);
                 saveHighScore(playerName, attemptsLeft);
                 return;
             }else if(guess.equals("26")){
@@ -136,7 +136,7 @@ public class GitHub {
             }
         }
 
-        con.println("Game over! The word was: " + secretWord);
+        loseScreen(con, secretWord);
     }
 
      
@@ -194,13 +194,23 @@ public class GitHub {
     // Method to view high scores
     public static void viewHighScores(Console con) {
         con.clear();
-        con.println("High Scores:");
-
+		con.println("--------------------------------------");
+		con.println("|           HIGH SCORES              |");
+		con.println("--------------------------------------");
+		con.println("| Player Name   | Attempts Left      |");
+		con.println("|---------------|--------------------|");
+        
+        int intPlace = 0;
         // Read and display the high scores
         TextInputFile scoreFile = new TextInputFile("highscores.txt");
         while (!scoreFile.eof()) {
-            con.println(scoreFile.readLine());
+			intPlace = intPlace +1;
+			String strName = (scoreFile.readLine());
+			int intScore = (scoreFile.readInt());
+			con.println("| " +intPlace+". "+ strName+ "                  " + intScore*100);
+			
         }
+        con.println("--------------------------------------");
         scoreFile.close();
 
         // Ask the user if they want to return to the main menu
@@ -266,14 +276,27 @@ public class GitHub {
 		con.readLine();
 	}
 
+	//Lose Screen
+	public static void loseScreen(Console con, String unknownWord){
+        con.clear();
+		con.println("--------------------------------------");
+		con.println("|       GAME OVER YOU LOST           |");
+		con.println("--------------------------------------");
+		con.println("| The correct word was: " + unknownWord);
+		con.println("| Your score: 000");
+		con.println("--------------------------------------");
+		con.println("\nPress any key to return to the main menu...");
+		con.getChar(); // Wait for user input before returning
+	}
+	
 	//Win Screen
-	public static void win(Console con, String secretWord, int attemptsLeft){
+	public static void winScreen(Console con, String secretWord, int attemptsLeft){
 		con.clear();
 		con.println("--------------------------------------");
 		con.println("|       CONGRATULATIONS! YOU WON!    |");
 		con.println("--------------------------------------");
 		con.println("| The correct word was: " + secretWord);
-		con.println("| Attempts remaining: " + attemptsLeft);
+		con.println("| Your Score: " + attemptsLeft*100);
 		con.println("--------------------------------------");
 		con.println("\nPress any key to return to the main menu...");
 		con.getChar(); // Wait for user input before returning
