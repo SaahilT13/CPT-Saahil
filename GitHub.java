@@ -115,11 +115,14 @@ public class GitHub {
             revealedWord[i] = '_';
         }
 
-        con.println("Let's play Hangman!");
-        while (attemptsLeft > 0) {
-            con.println("Word: " + new String(revealedWord));
-            con.println("Attempts left: " + attemptsLeft);
-            con.print("Guess the word: ");
+        con.println("--------------------------------------");
+		con.println("|         HANGMAN GAMEPLAY           |");
+		con.println("--------------------------------------");
+        while (attemptsLeft > 0){
+			con.println("--------------------------------------");
+            con.println("| Word: " + new String(revealedWord));
+            con.println("| Attempts left: " + attemptsLeft);
+            con.print("| Guess the word: ");
             String guess = con.readLine().toUpperCase();
 
             if(guess.equals(secretWord)){
@@ -140,8 +143,6 @@ public class GitHub {
     }
 
      
-
-      
       // Method to save high score
 	 public static void saveHighScore(String playerName, int attemptsLeft) {
 		// Read existing scores
@@ -239,11 +240,16 @@ public class GitHub {
     //Help Screen
     public static void displayHelp(Console con) {
         con.clear();
-        con.println("Hangman Help:");
-        con.println("- Choose a theme and try to guess the word.");
-        con.println("- You guess whole words, not letters.");
-        con.println("- Each incorrect guess reveals a letter and adds a body part.");
-        con.println("- Get it right before the hangman is complete!");
+		con.println("----------------------------------------");
+        con.println("|               HELP                   |");
+        con.println("----------------------------------------");
+        con.println("| - Choose a theme and try to guess    |");
+        con.println("|   the word.                          |");
+        con.println("| - You guess whole words, not letters.|");
+        con.println("| - Each incorrect guess reveals a     |");
+        con.println("|   letter and adds a body part.       |");
+        con.println("| - Win before the hangman is complete!|");
+        con.println("--------------------------------------");
         con.println("\nPress any key to return to the main menu...");
         con.readLine();
     }
@@ -305,6 +311,9 @@ public class GitHub {
     //drawing the hanging man using 2d array
     public static void drawHangman(Console con, int stage){
         con.clear();
+        con.println("--------------------------------------");
+		con.println("|         HANGMAN GAMEPLAY           |");
+		con.println("--------------------------------------");
         String[][] hangmanStages = {
 			{ "  -----", "  |   |", "      |", "      |", "      |", "      |" },
 			{ "  -----", "  |   |", "  O   |", "      |", "      |", "      |" },
