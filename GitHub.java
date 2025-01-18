@@ -21,22 +21,22 @@ public class GitHub {
 			con.println("| 4. Help                            |");
 			con.println("| 5. Quit                            |");
 			con.println("--------------------------------------");
-			con.print("Enter your choice: ");
+			con.print("Enter your choice (the number): ");
 			int choice = con.readInt();
 
 
 			//Get user input to know what theeir choice is
 			
-            if (choice == 1){
+            if(choice == 1){
                 Game(con, themes, themeCount);
-            } else if(choice == 2){
+            }else if(choice == 2){
                 viewHighScores(con);
-            } else if(choice == 3){
+            }else if(choice == 3){
                 addTheme(con);
                 themeCount = loadThemes(themesFileName, themes); // Reload themes after adding one
-            } else if(choice == 4){
+            }else if(choice == 4){
                 displayHelp(con);
-            } else if(choice == 5){
+            }else if(choice == 5){
                 con.println("Thanks for playing!");
                 running = false;
             }else if(choice == 26){ //Year We Graduate
@@ -60,22 +60,27 @@ public class GitHub {
     }
 
     public static void Game(Console con, String[] themes, int themeCount) {
-        
         if (themeCount == 0) {
             con.println("No themes available. Add a theme first!");
             return;
         }
 
         con.clear();
-        con.println("Available themes:");
+        
+        con.println("--------------------------------------");
+		con.println("|         HANGMAN THEMES             |");
+		con.println("--------------------------------------");
+        con.println("| Available themes:");
         for (int i = 0; i < themeCount; i++) {
-            con.println((i + 1) + ". " + themes[i]);
+            con.println("| " +(i + 1) + ". " + themes[i]);
         }
+		con.println("--------------------------------------");
         con.print("Choose a theme (enter the number): ");
         int themeChoice = con.readInt();
 
         if (themeChoice < 1 || themeChoice > themeCount) {
             con.println("Invalid choice. Returning to main menu.");
+            con.readLine();
             return;
         }
 
@@ -105,7 +110,6 @@ public class GitHub {
     }
 
     public static void hangmanStart(Console con, String secretWord) {
-        con.clear();
         con.print("What is your Name? ");
         String playerName = con.readLine();
         con.clear();
@@ -139,7 +143,7 @@ public class GitHub {
             }
         }
 
-        loseScreen(con, secretWord);
+        loseScreen(con, secretWord, attemptsLeft);
     }
 
      
@@ -204,7 +208,7 @@ public class GitHub {
         int intPlace = 0;
         // Read and display the high scores
         TextInputFile scoreFile = new TextInputFile("highscores.txt");
-        while (!scoreFile.eof()) {
+        while (intPlace != 10) {
 			intPlace = intPlace +1;
 			String strName = (scoreFile.readLine());
 			int intScore = (scoreFile.readInt());
@@ -283,12 +287,15 @@ public class GitHub {
 	}
 
 	//Lose Screen
-	public static void loseScreen(Console con, String unknownWord){
+	public static void loseScreen(Console con, String secretWord, int attemptsLeft){
         con.clear();
 		con.println("--------------------------------------");
 		con.println("|       GAME OVER YOU LOST           |");
 		con.println("--------------------------------------");
-		con.println("| The correct word was: " + unknownWord);
+		con.println("Your Hangman: ");
+		drawHangman(con, 6 - attemptsLeft);
+		con.println("--------------------------------------");
+		con.println("| The correct word was: " + secretWord);
 		con.println("| Your score: 000");
 		con.println("--------------------------------------");
 		con.println("\nPress any key to return to the main menu...");
@@ -300,6 +307,9 @@ public class GitHub {
 		con.clear();
 		con.println("--------------------------------------");
 		con.println("|       CONGRATULATIONS! YOU WON!    |");
+		con.println("--------------------------------------");
+		con.println("Your Hangman: ");
+		drawHangman(con, 6 - attemptsLeft);
 		con.println("--------------------------------------");
 		con.println("| The correct word was: " + secretWord);
 		con.println("| Your Score: " + attemptsLeft*100);
