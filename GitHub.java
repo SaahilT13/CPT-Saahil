@@ -13,7 +13,7 @@ public class GitHub {
         while (running){
 			con.clear();
 			con.println("--------------------------------------");
-			con.println("|       WELCOME TO HANGMAN!       |");
+			con.println("|          WELCOME TO HANGMAN!       |");
 			con.println("--------------------------------------");
 			con.println("| 1. Play Game                       |");
 			con.println("| 2. View High Scores                |");
