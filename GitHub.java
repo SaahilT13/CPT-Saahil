@@ -41,7 +41,7 @@ public class GitHub {
                 running = false;
             }else if(choice == 26){ //Year We Graduate
 				funnyscreen(con);
-            } else {
+            } else{
                 con.println("Invalid choice. Try again.");
             }
         }
@@ -110,8 +110,16 @@ public class GitHub {
     }
 
     public static void hangmanStart(Console con, String secretWord) {
-        con.print("What is your Name? ");
+        con.print("What is your Username? (6 Characters Max): ");
         String playerName = con.readLine();
+        int nameLength = playerName.length();
+        while(nameLength > 6){
+			con.println("Nickname is too long, try a shorter one.");
+			con.print("What is your Username? ");
+			playerName = con.readLine();
+			nameLength = playerName.length();
+		}
+
         con.clear();
         int attemptsLeft = 6;
         char[] revealedWord = new char[secretWord.length()];
@@ -134,7 +142,8 @@ public class GitHub {
                 winScreen(con, secretWord, attemptsLeft);
                 saveHighScore(playerName, attemptsLeft);
                 return;
-            }else if(guess.equals("26")){
+            }else if(guess.equals("STATITANS")){
+				con.println("Congratulations you earned an extra attempt");
 				attemptsLeft = attemptsLeft + 1;
             }else{
                 attemptsLeft = attemptsLeft - 1;
@@ -202,7 +211,7 @@ public class GitHub {
 		con.println("--------------------------------------");
 		con.println("|           HIGH SCORES              |");
 		con.println("--------------------------------------");
-		con.println("| Player Name   | Attempts Left      |");
+		con.println("|   Player Name |       Score        |");
 		con.println("|---------------|--------------------|");
         
         int intPlace = 0;
@@ -247,13 +256,13 @@ public class GitHub {
 		con.println("----------------------------------------");
         con.println("|               HELP                   |");
         con.println("----------------------------------------");
-        con.println("| - Choose a theme and try to guess    |");
-        con.println("|   the word.                          |");
-        con.println("| - You guess whole words, not letters.|");
-        con.println("| - Each incorrect guess reveals a     |");
-        con.println("|   letter and adds a body part.       |");
-        con.println("| - Win before the hangman is complete!|");
-        con.println("--------------------------------------");
+        con.println("|1. Choose a theme and try to guess    |");
+        con.println("|    the word.                         |");
+        con.println("|2. You guess whole words, not letters.|");
+        con.println("|3. Each incorrect guess reveals a     |");
+        con.println("|    letter and adds a body part.      |");
+        con.println("|4. Win before the hangman is complete!|");
+        con.println("----------------------------------------");
         con.println("\nPress any key to return to the main menu...");
         con.readLine();
     }
